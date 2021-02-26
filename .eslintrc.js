@@ -16,6 +16,6 @@ module.exports = {
     ecmaVersion: 2018,
   },
   rules: {
-    'arrow-body-style': ['error', 'off'],
+    'arrow-body-style': 'off',
   },
 };
