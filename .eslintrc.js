@@ -11,9 +11,11 @@ module.exports = {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
+  parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 2018,
   },
   rules: {
+    'arrow-body-style': ['error', 'off'],
   },
 };
