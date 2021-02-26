@@ -15,7 +15,13 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018,
   },
+  plugins: [
+    'react',
+  ],
   rules: {
     'arrow-body-style': 'off',
+    'class-methods-use-this': 'off',
+    'react/jsx-uses-react': 1,
+    'react/jsx-uses-vars': 1,
   },
 };
