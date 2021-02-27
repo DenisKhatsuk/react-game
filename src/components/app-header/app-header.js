@@ -1,10 +1,11 @@
 import React from 'react';
 import './app-header.scss';
+import AppLogo from '../app-logo';
 
 const AppHeader = () => {
   return (
     <header className="app-header">
-      <div className = "logo"><img src="./img/logo.png" alt="App logo"/></div>
+      <AppLogo />
     </header>
   );
 };
