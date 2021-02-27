@@ -3,9 +3,10 @@ import './app-main.scss';
 
 const AppMain = () => {
   return (
-    <div className="app-main">
-      <h1>Tic Tac Toe game field</h1>
-    </div>
+    <main className="app-main">
+      <section className = "game-field"></section>
+      <section className = "game-settings"></section>
+    </main>
   );
 };
 

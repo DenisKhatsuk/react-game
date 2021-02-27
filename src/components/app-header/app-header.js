@@ -3,9 +3,9 @@ import './app-header.scss';
 
 const AppHeader = () => {
   return (
-    <div className="app-header">
-      <h1>Tic Tac Toe!</h1>
-    </div>
+    <header className="app-header">
+      <div className = "logo"><img src="./img/logo.png" alt="App logo"/></div>
+    </header>
   );
 };
 
