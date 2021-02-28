@@ -20,6 +20,8 @@ module.exports = {
   ],
   rules: {
     'arrow-body-style': 'off',
+    'no-plusplus': 'off',
+    'react/prop-types': 'off',
     'class-methods-use-this': 'off',
     'react/jsx-uses-react': 1,
     'react/jsx-uses-vars': 1,

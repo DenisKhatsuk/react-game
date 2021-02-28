@@ -8,6 +8,9 @@ $game-settings-background-color: #9fedd7;
   background-color: $main-background-color;
 
   .game-field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 70%;
   }
 
