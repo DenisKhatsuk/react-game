@@ -9,6 +9,8 @@ export default class GameBoard extends Component {
       ['', '', ''],
       ['', '', ''],
     ],
+    isPlaying: true,
+    winner: '',
   };
 
   currentPlayer = 'O';
@@ -20,10 +22,13 @@ export default class GameBoard extends Component {
     this.setState(({ board }) => {
       const newBoard = [...board];
       newBoard[row][column] = this.currentPlayer;
+      return {
+        board: newBoard,
+      };
+    }, () => {
       this.resultCheck();
-      return newBoard;
+      this.toggleCurrentPlayer();
     });
-    this.toggleCurrentPlayer();
   };
 
   toggleCurrentPlayer = () => {
@@ -35,22 +40,43 @@ export default class GameBoard extends Component {
     // horizontal check
     for (let i = 0; i < 3; i++) {
       if (board[i][0] && board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
-        console.log(`${board[0][i]} is a winner`);
+        const winner = board[0][i];
+        this.stopGame(winner);
       }
     }
     // vertical check
     for (let i = 0; i < 3; i++) {
       if (board[0][i] && board[0][i] === board[1][i] && board[1][i] === board[2][i]) {
-        console.log(`${board[0][i]} is a winner`);
+        const winner = board[0][i];
+        this.stopGame(winner);
       }
     }
     // diagonal check
-    if (board[0][0] && board[0][0] === board[1][1] && board[1][1] === board[2][2]) console.log(`${board[0][0]} is a winner`);
-    if (board[0][2] && board[0][2] === board[1][1] && board[1][1] === board[2][0]) console.log(`${board[0][2]} is a winner`);
+    if (board[0][0] && board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
+      const winner = board[0][0];
+      this.stopGame(winner);
+    }
+    if (board[0][2] && board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
+      const winner = board[0][2];
+      this.stopGame(winner);
+    }
+  };
+
+  stopGame = (winner) => {
+    this.setState({
+      isPlaying: false,
+      winner,
+    }, () => {
+      this.showResult();
+    });
+  };
+
+  showResult = () => {
+    alert(`Player ${this.state.winner} won!`);
   };
 
   render() {
-    const { board } = this.state;
+    const { board, isPlaying } = this.state;
     const gameBoard = board.map((row, rowIndex) => {
       return (
         <div
@@ -62,7 +88,8 @@ export default class GameBoard extends Component {
                         row = { rowIndex }
                         column = { columnIndex }
                         onSelect = { this.onSelect }
-                        value = { column } />);
+                        value = { column }
+                        isPlaying = { isPlaying }/>);
             })
             }
         </div>

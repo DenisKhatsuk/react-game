@@ -13,14 +13,15 @@ export default class BoardField extends Component {
       row,
       column,
       value,
+      isPlaying,
     } = this.props;
-    onSelect(row, column);
     const { isEmpty } = this.state;
-    if (isEmpty) {
+    if (isPlaying && isEmpty) {
       this.setState({
         value,
         isEmpty: false,
       });
+      onSelect(row, column);
     }
   };
 

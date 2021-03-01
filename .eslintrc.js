@@ -20,6 +20,7 @@ module.exports = {
   ],
   rules: {
     'arrow-body-style': 'off',
+    'prefer-destructuring': ['error', { object: true, array: false }],
     'no-plusplus': 'off',
     'react/prop-types': 'off',
     'class-methods-use-this': 'off',
