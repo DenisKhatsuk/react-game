@@ -9,9 +9,14 @@ $game-settings-background-color: #9fedd7;
 
   .game-field {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     width: 70%;
+
+    .info-panel {
+      margin: 15px 0;
+    }
   }
 
   .game-settings {

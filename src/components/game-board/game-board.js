@@ -28,6 +28,7 @@ export default class GameBoard extends Component {
     }, () => {
       this.resultCheck();
       this.toggleCurrentPlayer();
+      this.props.setMessage(`It's player ${this.currentPlayer} turn.`);
     });
   };
 
@@ -67,12 +68,8 @@ export default class GameBoard extends Component {
       isPlaying: false,
       winner,
     }, () => {
-      this.showResult();
+      this.props.setMessage(`Player ${this.state.winner} won!`);
     });
-  };
-
-  showResult = () => {
-    alert(`Player ${this.state.winner} won!`);
   };
 
   render() {
