@@ -3,18 +3,22 @@ import './board-field.scss';
 
 export default class BoardField extends Component {
   state = {
+    value: this.props.value,
     isEmpty: true,
-    value: '',
   };
 
   clickHandler = () => {
+    const {
+      onSelect,
+      row,
+      column,
+      value,
+    } = this.props;
+    onSelect(row, column);
     const { isEmpty } = this.state;
-    const { currentPlayer, onSelect } = this.props;
-    const player = currentPlayer();
-    onSelect();
     if (isEmpty) {
       this.setState({
-        value: player,
+        value,
         isEmpty: false,
       });
     }
