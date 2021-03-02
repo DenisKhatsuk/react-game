@@ -61,14 +61,22 @@ export default class GameBoard extends Component {
       const winner = board[0][2];
       this.stopGame(winner);
     }
+    // Tie check
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (!board[i][j]) return;
+      }
+    }
+    this.stopGame(null, 'tie');
   };
 
-  stopGame = (winner) => {
+  stopGame = (winner, tie) => {
     this.setState({
       isPlaying: false,
       winner,
     }, () => {
-      this.props.setMessage(`Player ${this.state.winner} won!`);
+      if (winner) this.props.setMessage(`Player ${this.state.winner} won!`);
+      if (tie) this.props.setMessage('Tie!');
     });
   };
 
