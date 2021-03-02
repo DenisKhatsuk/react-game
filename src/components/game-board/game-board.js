@@ -20,8 +20,7 @@ export default class GameBoard extends Component {
 
   idCounter = 0;
 
-  onSelect = (row, column) => {
-    if (this.state.board[row][column]) return;
+  makeMove = (row, column) => {
     this.setState(({ board }) => {
       const newBoard = [...board];
       newBoard[row][column] = this.currentPlayer;
@@ -37,6 +36,53 @@ export default class GameBoard extends Component {
     });
   };
 
+  autoplay = () => {
+    this.setState({
+      board: [
+        ['', '', ''],
+        ['', '', ''],
+        ['', '', ''],
+      ],
+      isPlaying: true,
+      winner: '',
+      message: 'Let\'s play!',
+    }, () => {
+      const availableFields = [];
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+          availableFields.push([i, j]);
+        }
+      }
+      const makeRandomMove = () => {
+        if (this.state.isPlaying) {
+          const randomIndex = Math.floor(Math.random() * (availableFields.length + 1));
+          const [randomField] = availableFields.splice(randomIndex - 1, 1);
+          const [row, column] = randomField;
+          this.setState(({ board }) => {
+            const newBoard = [...board];
+            newBoard[row][column] = this.currentPlayer;
+            return {
+              board: newBoard,
+            };
+          }, () => {
+            this.resultCheck();
+            this.toggleCurrentPlayer();
+            this.setState({
+              message: `It's player ${this.currentPlayer} turn.`,
+            });
+            if (availableFields.length) setTimeout(makeRandomMove, 1000);
+          });
+        }
+      };
+      makeRandomMove();
+    });
+  };
+
+  onSelect = (row, column) => {
+    if (this.state.board[row][column]) return;
+    this.makeMove(row, column);
+  };
+
   toggleCurrentPlayer = () => {
     this.currentPlayer = this.currentPlayer === 'O' ? 'X' : 'O';
   };
@@ -48,6 +94,7 @@ export default class GameBoard extends Component {
       if (board[i][0] && board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
         const winner = board[i][0];
         this.stopGame(winner);
+        return;
       }
     }
     // vertical check
@@ -55,16 +102,19 @@ export default class GameBoard extends Component {
       if (board[0][i] && board[0][i] === board[1][i] && board[1][i] === board[2][i]) {
         const winner = board[0][i];
         this.stopGame(winner);
+        return;
       }
     }
     // diagonal check
     if (board[0][0] && board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
       const winner = board[0][0];
       this.stopGame(winner);
+      return;
     }
     if (board[0][2] && board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
       const winner = board[0][2];
       this.stopGame(winner);
+      return;
     }
     // Tie check
     for (let i = 0; i < 3; i++) {
@@ -103,6 +153,11 @@ export default class GameBoard extends Component {
 
   settingsListener = (button) => {
     switch (button) {
+      case 'Autoplay':
+        this.autoplay();
+        break;
+      case 'Statistics':
+        break;
       case 'NewGame':
         this.startNewGame();
         break;
