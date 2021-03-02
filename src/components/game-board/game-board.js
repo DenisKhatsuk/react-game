@@ -20,6 +20,36 @@ export default class GameBoard extends Component {
 
   idCounter = 0;
 
+  setInitialGameState = () => {
+    this.setState({
+      board: [
+        ['', '', ''],
+        ['', '', ''],
+        ['', '', ''],
+      ],
+      isPlaying: true,
+      winner: '',
+      message: 'Let\'s play!',
+    });
+  };
+
+  toggleCurrentPlayer = () => {
+    this.currentPlayer = this.currentPlayer === 'O' ? 'X' : 'O';
+  };
+
+  stopGame = (winner) => {
+    const winMessage = `Player ${winner} won!`;
+    const tieMessage = 'Tie!';
+    this.setState({
+      isPlaying: false,
+      winner,
+    }, () => {
+      this.setState({
+        message: winner ? winMessage : tieMessage,
+      });
+    });
+  };
+
   makeMove = (row, column) => {
     this.setState(({ board }) => {
       const newBoard = [...board];
@@ -34,6 +64,44 @@ export default class GameBoard extends Component {
         message: `It's player ${this.currentPlayer} turn.`,
       });
     });
+  };
+
+  resultCheck = () => {
+    const { board } = this.state;
+    // horizontal check
+    for (let i = 0; i < 3; i++) {
+      if (board[i][0] && board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
+        const winner = board[i][0];
+        this.stopGame(winner);
+        return;
+      }
+    }
+    // vertical check
+    for (let i = 0; i < 3; i++) {
+      if (board[0][i] && board[0][i] === board[1][i] && board[1][i] === board[2][i]) {
+        const winner = board[0][i];
+        this.stopGame(winner);
+        return;
+      }
+    }
+    // diagonal check
+    if (board[0][0] && board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
+      const winner = board[0][0];
+      this.stopGame(winner);
+      return;
+    }
+    if (board[0][2] && board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
+      const winner = board[0][2];
+      this.stopGame(winner);
+      return;
+    }
+    // Tie check
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (!board[i][j]) return;
+      }
+    }
+    this.stopGame(null);
   };
 
   autoplay = () => {
@@ -83,74 +151,6 @@ export default class GameBoard extends Component {
     this.makeMove(row, column);
   };
 
-  toggleCurrentPlayer = () => {
-    this.currentPlayer = this.currentPlayer === 'O' ? 'X' : 'O';
-  };
-
-  resultCheck = () => {
-    const { board } = this.state;
-    // horizontal check
-    for (let i = 0; i < 3; i++) {
-      if (board[i][0] && board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
-        const winner = board[i][0];
-        this.stopGame(winner);
-        return;
-      }
-    }
-    // vertical check
-    for (let i = 0; i < 3; i++) {
-      if (board[0][i] && board[0][i] === board[1][i] && board[1][i] === board[2][i]) {
-        const winner = board[0][i];
-        this.stopGame(winner);
-        return;
-      }
-    }
-    // diagonal check
-    if (board[0][0] && board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
-      const winner = board[0][0];
-      this.stopGame(winner);
-      return;
-    }
-    if (board[0][2] && board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
-      const winner = board[0][2];
-      this.stopGame(winner);
-      return;
-    }
-    // Tie check
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
-        if (!board[i][j]) return;
-      }
-    }
-    this.stopGame(null);
-  };
-
-  stopGame = (winner) => {
-    const winMessage = `Player ${winner} won!`;
-    const tieMessage = 'Tie!';
-    this.setState({
-      isPlaying: false,
-      winner,
-    }, () => {
-      this.setState({
-        message: winner ? winMessage : tieMessage,
-      });
-    });
-  };
-
-  startNewGame = () => {
-    this.setState({
-      board: [
-        ['', '', ''],
-        ['', '', ''],
-        ['', '', ''],
-      ],
-      isPlaying: true,
-      winner: '',
-      message: 'Let\'s play!',
-    });
-  };
-
   settingsListener = (button) => {
     switch (button) {
       case 'Autoplay':
@@ -159,7 +159,7 @@ export default class GameBoard extends Component {
       case 'Statistics':
         break;
       case 'NewGame':
-        this.startNewGame();
+        this.setInitialGameState();
         break;
       default:
         break;
