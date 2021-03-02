@@ -20,6 +20,9 @@ $game-settings-background-color: #9fedd7;
   }
 
   .game-settings {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     width: 30%;
     background-color: $game-settings-background-color;
   }

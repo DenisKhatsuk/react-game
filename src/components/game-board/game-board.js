@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './game-board.scss';
 import BoardField from '../board-field';
+import InfoPanel from '../info-panel';
+import ButtonsBlock from '../buttons-block';
 
 export default class GameBoard extends Component {
   state = {
@@ -11,6 +13,7 @@ export default class GameBoard extends Component {
     ],
     isPlaying: true,
     winner: '',
+    message: 'Let\'s play!',
   };
 
   currentPlayer = 'O';
@@ -28,7 +31,9 @@ export default class GameBoard extends Component {
     }, () => {
       this.resultCheck();
       this.toggleCurrentPlayer();
-      this.props.setMessage(`It's player ${this.currentPlayer} turn.`);
+      this.setState({
+        message: `It's player ${this.currentPlayer} turn.`,
+      });
     });
   };
 
@@ -41,7 +46,7 @@ export default class GameBoard extends Component {
     // horizontal check
     for (let i = 0; i < 3; i++) {
       if (board[i][0] && board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
-        const winner = board[0][i];
+        const winner = board[i][0];
         this.stopGame(winner);
       }
     }
@@ -67,20 +72,47 @@ export default class GameBoard extends Component {
         if (!board[i][j]) return;
       }
     }
-    this.stopGame(null, 'tie');
+    this.stopGame(null);
   };
 
-  stopGame = (winner, tie) => {
+  stopGame = (winner) => {
+    const winMessage = `Player ${winner} won!`;
+    const tieMessage = 'Tie!';
     this.setState({
       isPlaying: false,
       winner,
     }, () => {
-      if (winner) this.props.setMessage(`Player ${this.state.winner} won!`);
-      if (tie) this.props.setMessage('Tie!');
+      this.setState({
+        message: winner ? winMessage : tieMessage,
+      });
     });
   };
 
+  startNewGame = () => {
+    this.setState({
+      board: [
+        ['', '', ''],
+        ['', '', ''],
+        ['', '', ''],
+      ],
+      isPlaying: true,
+      winner: '',
+      message: 'Let\'s play!',
+    });
+  };
+
+  settingsListener = (button) => {
+    switch (button) {
+      case 'NewGame':
+        this.startNewGame();
+        break;
+      default:
+        break;
+    }
+  };
+
   render() {
+    this.settingsListener();
     const { board, isPlaying } = this.state;
     const gameBoard = board.map((row, rowIndex) => {
       return (
@@ -102,7 +134,13 @@ export default class GameBoard extends Component {
     });
     return (
       <div className = "game-board">
-        { gameBoard }
+        <section className = "game-field">
+          <InfoPanel message = { this.state.message }/>
+          { gameBoard }
+        </section>
+        <section className = "game-settings">
+          <ButtonsBlock onSelect = { this.settingsListener }/>
+        </section>
       </div>
     );
   }
