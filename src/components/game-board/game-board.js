@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './game-board.scss';
+import ReactHowler from 'react-howler';
 import BoardField from '../board-field';
 import InfoPanel from '../info-panel';
 import ButtonsBlock from '../buttons-block';
@@ -21,6 +22,14 @@ export default class GameBoard extends Component {
   currentPlayer = 'X';
 
   startingPlayer = 'X';
+
+  soundIsOn = false;
+
+  playMoveSound = false;
+
+  playEndGameSound = false;
+
+  playMusic = false;
 
   idCounter = 0;
 
@@ -65,6 +74,21 @@ export default class GameBoard extends Component {
     this.setInitialGameState();
   };
 
+  toggleSoundSwitch = () => {
+    this.soundIsOn = !this.soundIsOn;
+  };
+
+  toggleMusicSwitch = () => {
+    this.playMusic = !this.playMusic;
+  };
+
+  toggleSound = (sound) => {
+    this[sound] = true;
+    setTimeout(() => {
+      this[sound] = false;
+    }, 100);
+  };
+
   stopGame = (winner) => {
     const winMessage = `Player ${winner} won!`;
     const tieMessage = 'Tie!';
@@ -77,6 +101,7 @@ export default class GameBoard extends Component {
       });
     });
     this.drawLine(1);
+    if (this.soundIsOn) this.toggleSound('playEndGameSound');
   };
 
   makeMove = (row, column) => {
@@ -87,6 +112,7 @@ export default class GameBoard extends Component {
         board: newBoard,
       };
     }, () => {
+      if (this.soundIsOn) this.toggleSound('playMoveSound');
       this.resultCheck();
       this.toggleCurrentPlayer();
       this.setState({
@@ -167,6 +193,7 @@ export default class GameBoard extends Component {
               board: newBoard,
             };
           }, () => {
+            if (this.soundIsOn) this.toggleSound('playMoveSound');
             this.resultCheck();
             this.toggleCurrentPlayer();
             this.setState({
@@ -235,9 +262,26 @@ export default class GameBoard extends Component {
           <TogglesBlock
             onPlayerChange = { this.toggleStartingPlayer }
             playerState = { this.startingPlayer === 'O' }
+            onSoundChange = { this.toggleSoundSwitch }
+            soundState = { this.soundIsOn }
+            onMusicChange = { this.toggleMusicSwitch }
+            musicState = { this.playMusic }
           />
           <ButtonsBlock onSelect = { this.settingsListener }/>
         </section>
+        <ReactHowler
+          src='./sounds/move-sound.mp3'
+          playing = { this.playMoveSound }
+        />
+        <ReactHowler
+          src='./sounds/end-game-sound.mp3'
+          playing = { this.playEndGameSound }
+        />
+        <ReactHowler
+          src='./sounds/game-sound.ogg'
+          loop = { true }
+          playing = { this.playMusic }
+        />
       </div>
     );
   }

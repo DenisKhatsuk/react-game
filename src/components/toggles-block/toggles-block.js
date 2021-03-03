@@ -2,14 +2,33 @@ import React, { useState } from 'react';
 import './toggles-block.scss';
 import Switch from 'react-switch';
 
-const TogglesBlock = ({ onPlayerChange, playerState }) => {
+const TogglesBlock = ({
+  onPlayerChange,
+  playerState,
+  onSoundChange,
+  soundState,
+  onMusicChange,
+  musicState,
+}) => {
   const [playerChecked, setPlayerChecked] = useState(playerState);
   const [nightModeChecked, setNightModeChecked] = useState(false);
   const [fullscreenChecked, setFullscreenChecked] = useState(false);
+  const [soundChecked, setSoundChecked] = useState(soundState);
+  const [musicChecked, setMusicChecked] = useState(musicState);
 
   const handlePlayerChange = (nextChecked) => {
     setPlayerChecked(nextChecked);
     onPlayerChange();
+  };
+
+  const handleSoundChange = (nextChecked) => {
+    setSoundChecked(nextChecked);
+    onSoundChange();
+  };
+
+  const handleMusicChange = (nextChecked) => {
+    setMusicChecked(nextChecked);
+    onMusicChange();
   };
 
   const handleNightModeChange = (nextChecked) => {
@@ -91,6 +110,26 @@ const TogglesBlock = ({ onPlayerChange, playerState }) => {
         <Switch
           onChange = { handleFullscreenChange }
           checked = { fullscreenChecked }
+          className = 'react-switch'
+          onColor = '#86d3ff'
+          onHandleColor = '#2693e6'
+        />
+      </label>
+      <label className = 'toggles-block__toggle'>
+        <span>Sounds</span>
+        <Switch
+          onChange = { handleSoundChange }
+          checked = { soundChecked }
+          className = 'react-switch'
+          onColor = '#86d3ff'
+          onHandleColor = '#2693e6'
+        />
+      </label>
+      <label className = 'toggles-block__toggle'>
+        <span>Music</span>
+        <Switch
+          onChange = { handleMusicChange }
+          checked = { musicChecked }
           className = 'react-switch'
           onColor = '#86d3ff'
           onHandleColor = '#2693e6'
