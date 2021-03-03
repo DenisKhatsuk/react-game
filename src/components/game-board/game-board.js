@@ -4,6 +4,7 @@ import BoardField from '../board-field';
 import InfoPanel from '../info-panel';
 import ButtonsBlock from '../buttons-block';
 import TogglesBlock from '../toggles-block';
+import WinningLine from '../winning-line';
 
 export default class GameBoard extends Component {
   state = {
@@ -22,6 +23,24 @@ export default class GameBoard extends Component {
   startingPlayer = 'X';
 
   idCounter = 0;
+
+  winningLines = [
+    [[0, 0], [0, 0]],
+    [[10, 50], [290, 50]],
+    [[10, 150], [290, 150]],
+    [[10, 250], [290, 250]],
+    [[50, 10], [50, 290]],
+    [[150, 10], [150, 290]],
+    [[250, 10], [250, 290]],
+    [[10, 10], [290, 290]],
+    [[10, 290], [290, 10]],
+  ];
+
+  winningLine = this.winningLines[0];
+
+  drawLine = (idx) => {
+    this.winningLine = this.winningLines[idx];
+  }
 
   setInitialGameState = () => {
     this.setState({
@@ -57,6 +76,7 @@ export default class GameBoard extends Component {
         message: winner ? winMessage : tieMessage,
       });
     });
+    this.drawLine(1);
   };
 
   makeMove = (row, column) => {
@@ -82,6 +102,7 @@ export default class GameBoard extends Component {
       if (board[i][0] && board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
         const winner = board[i][0];
         this.stopGame(winner);
+        this.drawLine(i + 1);
         return;
       }
     }
@@ -90,6 +111,7 @@ export default class GameBoard extends Component {
       if (board[0][i] && board[0][i] === board[1][i] && board[1][i] === board[2][i]) {
         const winner = board[0][i];
         this.stopGame(winner);
+        this.drawLine(i + 4);
         return;
       }
     }
@@ -97,11 +119,13 @@ export default class GameBoard extends Component {
     if (board[0][0] && board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
       const winner = board[0][0];
       this.stopGame(winner);
+      this.drawLine(7);
       return;
     }
     if (board[0][2] && board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
       const winner = board[0][2];
       this.stopGame(winner);
+      this.drawLine(8);
       return;
     }
     // Tie check
@@ -111,6 +135,7 @@ export default class GameBoard extends Component {
       }
     }
     this.stopGame(null);
+    this.drawLine(0);
   };
 
   autoplay = () => {
@@ -200,6 +225,10 @@ export default class GameBoard extends Component {
       <div className = "game-board">
         <section className = "game-field">
           <InfoPanel message = { this.state.message }/>
+          <WinningLine
+            line = { this.winningLine }
+            visibility = { !this.state.isPlaying }
+          />
           { gameBoard }
         </section>
         <section className = "game-settings">

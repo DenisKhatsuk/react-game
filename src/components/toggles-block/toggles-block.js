@@ -49,7 +49,7 @@ const TogglesBlock = ({ onPlayerChange, playerState }) => {
   return (
     <div className = 'toggles-block'>
       <label className = 'toggles-block__toggle'>
-        <span>Who starts the game</span>
+        <span>First player</span>
         <Switch
           onChange = { handlePlayerChange }
           checked = { playerChecked }

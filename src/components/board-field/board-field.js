@@ -30,7 +30,7 @@ export default class BoardField extends Component {
       <div
         className = "board-field"
         onClick = { this.clickHandler }>
-          <span>{ this.state.value }</span>
+          { this.state.value }
       </div>
     );
   }
