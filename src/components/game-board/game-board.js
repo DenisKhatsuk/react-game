@@ -17,7 +17,7 @@ export default class GameBoard extends Component {
     message: 'Let\'s play!',
   };
 
-  currentPlayer = 'O';
+  currentPlayer = 'X';
 
   idCounter = 0;
 
@@ -32,6 +32,7 @@ export default class GameBoard extends Component {
       winner: '',
       message: 'Let\'s play!',
     });
+    this.currentPlayer = 'X';
   };
 
   toggleCurrentPlayer = () => {

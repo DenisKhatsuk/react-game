@@ -1,6 +1,29 @@
+$game-settings-background-color: #9fedd7;
+
 .game-board {
   display: flex;
   width: 100%;
+
+  .game-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 70%;
+
+    .info-panel {
+      margin: 15px 0;
+    }
+  }
+
+  .game-settings {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30%;
+    padding: 20px 30px;
+    background-color: $game-settings-background-color;
+  }
 }
 
 .board-field {
