@@ -204,7 +204,7 @@ export default class GameBoard extends Component {
         </section>
         <section className = "game-settings">
           <TogglesBlock
-            onChange = { this.toggleStartingPlayer }
+            onPlayerChange = { this.toggleStartingPlayer }
             playerState = { this.startingPlayer === 'O' }
           />
           <ButtonsBlock onSelect = { this.settingsListener }/>

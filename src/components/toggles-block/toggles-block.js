@@ -2,18 +2,19 @@ import React, { useState } from 'react';
 import './toggles-block.scss';
 import Switch from 'react-switch';
 
-const TogglesBlock = ({ onChange, playerState }) => {
+const TogglesBlock = ({ onPlayerChange, playerState }) => {
   const [playerChecked, setPlayerChecked] = useState(playerState);
   const [nightModeChecked, setNightModeChecked] = useState(false);
   const [fullscreenChecked, setFullscreenChecked] = useState(false);
 
   const handlePlayerChange = (nextChecked) => {
     setPlayerChecked(nextChecked);
-    onChange();
+    onPlayerChange();
   };
 
   const handleNightModeChange = (nextChecked) => {
     setNightModeChecked(nextChecked);
+    document.getElementById('root').classList.toggle('night-mode');
   };
 
   const handleFullscreenChange = (nextChecked) => {
