@@ -3,6 +3,7 @@ import './game-board.scss';
 import BoardField from '../board-field';
 import InfoPanel from '../info-panel';
 import ButtonsBlock from '../buttons-block';
+import TogglesBlock from '../toggles-block';
 
 export default class GameBoard extends Component {
   state = {
@@ -194,6 +195,7 @@ export default class GameBoard extends Component {
           { gameBoard }
         </section>
         <section className = "game-settings">
+          <TogglesBlock />
           <ButtonsBlock onSelect = { this.settingsListener }/>
         </section>
       </div>
