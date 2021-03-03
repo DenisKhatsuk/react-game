@@ -2,19 +2,24 @@ import React, { useState } from 'react';
 import './toggles-block.scss';
 import Switch from 'react-switch';
 
-const TogglesBlock = () => {
-  const [playerChecked, setPlayerChecked] = useState(false);
+const TogglesBlock = ({ onChange, playerState }) => {
+  const [playerChecked, setPlayerChecked] = useState(playerState);
   const [nightModeChecked, setNightModeChecked] = useState(false);
   const [fullscreenChecked, setFullscreenChecked] = useState(false);
+
   const handlePlayerChange = (nextChecked) => {
     setPlayerChecked(nextChecked);
+    onChange();
   };
+
   const handleNightModeChange = (nextChecked) => {
     setNightModeChecked(nextChecked);
   };
+
   const handleFullscreenChange = (nextChecked) => {
     setFullscreenChecked(nextChecked);
   };
+
   return (
     <div className = 'toggles-block'>
       <label className = 'toggles-block__toggle'>

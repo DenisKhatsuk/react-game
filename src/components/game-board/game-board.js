@@ -19,6 +19,8 @@ export default class GameBoard extends Component {
 
   currentPlayer = 'X';
 
+  startingPlayer = 'X';
+
   idCounter = 0;
 
   setInitialGameState = () => {
@@ -32,11 +34,16 @@ export default class GameBoard extends Component {
       winner: '',
       message: 'Let\'s play!',
     });
-    this.currentPlayer = 'X';
+    this.currentPlayer = this.startingPlayer;
   };
 
   toggleCurrentPlayer = () => {
     this.currentPlayer = this.currentPlayer === 'O' ? 'X' : 'O';
+  };
+
+  toggleStartingPlayer = () => {
+    this.startingPlayer = this.startingPlayer === 'O' ? 'X' : 'O';
+    this.setInitialGameState();
   };
 
   stopGame = (winner) => {
@@ -196,7 +203,10 @@ export default class GameBoard extends Component {
           { gameBoard }
         </section>
         <section className = "game-settings">
-          <TogglesBlock />
+          <TogglesBlock
+            onChange = { this.toggleStartingPlayer }
+            playerState = { this.startingPlayer === 'O' }
+          />
           <ButtonsBlock onSelect = { this.settingsListener }/>
         </section>
       </div>
