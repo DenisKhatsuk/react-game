@@ -3,25 +3,25 @@ import './toggles-block.scss';
 import Switch from 'react-switch';
 
 const TogglesBlock = () => {
-  const [checked, setChecked] = useState(false);
-  const [checked1, setChecked1] = useState(false);
-  const [checked2, setChecked2] = useState(false);
-  const handleChange = (nextChecked) => {
-    setChecked(nextChecked);
+  const [playerChecked, setPlayerChecked] = useState(false);
+  const [nightModeChecked, setNightModeChecked] = useState(false);
+  const [fullscreenChecked, setFullscreenChecked] = useState(false);
+  const handlePlayerChange = (nextChecked) => {
+    setPlayerChecked(nextChecked);
   };
-  const handleChange1 = (nextChecked) => {
-    setChecked1(nextChecked);
+  const handleNightModeChange = (nextChecked) => {
+    setNightModeChecked(nextChecked);
   };
-  const handleChange2 = (nextChecked) => {
-    setChecked2(nextChecked);
+  const handleFullscreenChange = (nextChecked) => {
+    setFullscreenChecked(nextChecked);
   };
   return (
     <div className = 'toggles-block'>
       <label className = 'toggles-block__toggle'>
         <span>Who starts the game</span>
         <Switch
-          onChange = { handleChange }
-          checked = { checked }
+          onChange = { handlePlayerChange }
+          checked = { playerChecked }
           className = 'react-switch'
           onColor = '#86d3ff'
           onHandleColor = '#2693e6'
@@ -48,8 +48,8 @@ const TogglesBlock = () => {
       <label className = 'toggles-block__toggle'>
         <span>Night Mode</span>
         <Switch
-          onChange = { handleChange1 }
-          checked = { checked1 }
+          onChange = { handleNightModeChange }
+          checked = { nightModeChecked }
           className = 'react-switch'
           onColor = '#86d3ff'
           onHandleColor = '#2693e6'
@@ -58,8 +58,8 @@ const TogglesBlock = () => {
       <label className = 'toggles-block__toggle'>
         <span>Fullscreen</span>
         <Switch
-          onChange = { handleChange2 }
-          checked = { checked2 }
+          onChange = { handleFullscreenChange }
+          checked = { fullscreenChecked }
           className = 'react-switch'
           onColor = '#86d3ff'
           onHandleColor = '#2693e6'
