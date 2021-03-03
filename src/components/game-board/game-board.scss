@@ -50,3 +50,11 @@ $game-settings-background-color: #9fedd7;
     border-bottom: none;
   }
 }
+
+@media (max-width: 700px) {
+  .game-board {
+    .game-settings {
+      padding: 0;
+    }
+  }
+}
