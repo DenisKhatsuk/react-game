@@ -17,8 +17,33 @@ const TogglesBlock = ({ onPlayerChange, playerState }) => {
     document.getElementById('root').classList.toggle('night-mode');
   };
 
+  const launchFullScreen = (element) => {
+    if (element.requestFullScreen) {
+      element.requestFullScreen();
+    } else if (element.mozRequestFullScreen) {
+      element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullScreen) {
+      element.webkitRequestFullScreen();
+    }
+  };
+
+  const cancelFullscreen = () => {
+    if (document.cancelFullScreen) {
+      document.cancelFullScreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitCancelFullScreen) {
+      document.webkitCancelFullScreen();
+    }
+  };
+
   const handleFullscreenChange = (nextChecked) => {
     setFullscreenChecked(nextChecked);
+    if (!fullscreenChecked) {
+      launchFullScreen(document.getElementById('root'));
+    } else {
+      cancelFullscreen();
+    }
   };
 
   return (
