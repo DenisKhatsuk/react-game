@@ -49,6 +49,12 @@ export default class GameBoard extends Component {
 
   winningLine = this.winningLines[0];
 
+  saveSessionData = () => {
+    sessionStorage.setItem('startingPlayer', this.startingPlayer);
+    sessionStorage.setItem('isNightMode', this.isNightMode);
+    sessionStorage.setItem('soundIsOn', this.soundIsOn);
+  };
+
   drawLine = (idx) => {
     this.winningLine = this.winningLines[idx];
   }
@@ -73,19 +79,16 @@ export default class GameBoard extends Component {
 
   toggleStartingPlayer = () => {
     this.startingPlayer = this.startingPlayer === 'O' ? 'X' : 'O';
-    sessionStorage.setItem('startingPlayer', this.startingPlayer);
     this.setInitialGameState();
   };
 
   toggleNightModeSwitch = () => {
     this.isNightMode = !this.isNightMode;
-    sessionStorage.setItem('isNightMode', this.isNightMode);
     document.getElementById('root').classList.toggle('night-mode');
   };
 
   toggleSoundSwitch = () => {
     this.soundIsOn = !this.soundIsOn;
-    sessionStorage.setItem('soundIsOn', this.soundIsOn);
   };
 
   toggleMusicSwitch = () => {
@@ -238,6 +241,9 @@ export default class GameBoard extends Component {
   };
 
   render() {
+    window.addEventListener('beforeunload', () => {
+      this.saveSessionData();
+    });
     if (this.isNightMode) document.getElementById('root').classList.add('night-mode');
     this.settingsListener();
     const { board, isPlaying } = this.state;
