@@ -16,7 +16,7 @@ export default class GameBoard extends Component {
     ],
     isPlaying: true,
     winner: '',
-    message: 'Let\'s play!',
+    message: sessionStorage.getItem('message') || 'Let\'s play!',
   };
 
   currentPlayer = sessionStorage.getItem('startingPlayer') || 'X';
@@ -50,6 +50,7 @@ export default class GameBoard extends Component {
   winningLine = this.winningLines[0];
 
   saveSessionData = () => {
+    sessionStorage.setItem('message', this.state.message);
     sessionStorage.setItem('startingPlayer', this.startingPlayer);
     sessionStorage.setItem('isNightMode', this.isNightMode);
     sessionStorage.setItem('soundIsOn', this.soundIsOn);
