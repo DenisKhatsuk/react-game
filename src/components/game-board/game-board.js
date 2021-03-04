@@ -9,7 +9,7 @@ import WinningLine from '../winning-line';
 
 export default class GameBoard extends Component {
   state = {
-    board: [
+    board: JSON.parse(sessionStorage.getItem('board')) || [
       ['', '', ''],
       ['', '', ''],
       ['', '', ''],
@@ -53,6 +53,7 @@ export default class GameBoard extends Component {
     sessionStorage.setItem('startingPlayer', this.startingPlayer);
     sessionStorage.setItem('isNightMode', this.isNightMode);
     sessionStorage.setItem('soundIsOn', this.soundIsOn);
+    sessionStorage.setItem('board', JSON.stringify(this.state.board));
   };
 
   drawLine = (idx) => {
