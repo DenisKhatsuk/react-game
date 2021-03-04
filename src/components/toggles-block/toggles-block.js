@@ -9,9 +9,11 @@ const TogglesBlock = ({
   soundState,
   onMusicChange,
   musicState,
+  onNightModeChange,
+  nightModeState,
 }) => {
   const [playerChecked, setPlayerChecked] = useState(playerState);
-  const [nightModeChecked, setNightModeChecked] = useState(false);
+  const [nightModeChecked, setNightModeChecked] = useState(nightModeState);
   const [fullscreenChecked, setFullscreenChecked] = useState(false);
   const [soundChecked, setSoundChecked] = useState(soundState);
   const [musicChecked, setMusicChecked] = useState(musicState);
@@ -33,7 +35,7 @@ const TogglesBlock = ({
 
   const handleNightModeChange = (nextChecked) => {
     setNightModeChecked(nextChecked);
-    document.getElementById('root').classList.toggle('night-mode');
+    onNightModeChange();
   };
 
   const launchFullScreen = (element) => {

@@ -19,9 +19,11 @@ export default class GameBoard extends Component {
     message: 'Let\'s play!',
   };
 
-  currentPlayer = 'X';
+  currentPlayer = sessionStorage.getItem('startingPlayer') || 'X';
 
-  startingPlayer = 'X';
+  startingPlayer = sessionStorage.getItem('startingPlayer') || 'X';
+
+  isNightMode = (sessionStorage.getItem('isNightMode') === 'true');
 
   soundIsOn = false;
 
@@ -71,7 +73,14 @@ export default class GameBoard extends Component {
 
   toggleStartingPlayer = () => {
     this.startingPlayer = this.startingPlayer === 'O' ? 'X' : 'O';
+    sessionStorage.setItem('startingPlayer', this.startingPlayer);
     this.setInitialGameState();
+  };
+
+  toggleNightModeSwitch = () => {
+    this.isNightMode = !this.isNightMode;
+    sessionStorage.setItem('isNightMode', this.isNightMode);
+    document.getElementById('root').classList.toggle('night-mode');
   };
 
   toggleSoundSwitch = () => {
@@ -228,6 +237,7 @@ export default class GameBoard extends Component {
   };
 
   render() {
+    if (this.isNightMode) document.getElementById('root').classList.add('night-mode');
     this.settingsListener();
     const { board, isPlaying } = this.state;
     const gameBoard = board.map((row, rowIndex) => {
@@ -266,6 +276,8 @@ export default class GameBoard extends Component {
             soundState = { this.soundIsOn }
             onMusicChange = { this.toggleMusicSwitch }
             musicState = { this.playMusic }
+            onNightModeChange = { this.toggleNightModeSwitch }
+            nightModeState = { this.isNightMode }
           />
           <ButtonsBlock onSelect = { this.settingsListener }/>
         </section>
@@ -278,7 +290,7 @@ export default class GameBoard extends Component {
           playing = { this.playEndGameSound }
         />
         <ReactHowler
-          src='./sounds/game-sound.ogg'
+          src='./sounds/game-music.mp3'
           loop = { true }
           playing = { this.playMusic }
         />
