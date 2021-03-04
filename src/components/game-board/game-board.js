@@ -25,13 +25,13 @@ export default class GameBoard extends Component {
 
   isNightMode = (sessionStorage.getItem('isNightMode') === 'true');
 
-  soundIsOn = false;
+  soundIsOn = (sessionStorage.getItem('soundIsOn') === 'true');;
 
   playMoveSound = false;
 
   playEndGameSound = false;
 
-  playMusic = false;
+  musicIsOn = false;
 
   idCounter = 0;
 
@@ -85,10 +85,11 @@ export default class GameBoard extends Component {
 
   toggleSoundSwitch = () => {
     this.soundIsOn = !this.soundIsOn;
+    sessionStorage.setItem('soundIsOn', this.soundIsOn);
   };
 
   toggleMusicSwitch = () => {
-    this.playMusic = !this.playMusic;
+    this.musicIsOn = !this.musicIsOn;
   };
 
   toggleSound = (sound) => {
@@ -275,7 +276,7 @@ export default class GameBoard extends Component {
             onSoundChange = { this.toggleSoundSwitch }
             soundState = { this.soundIsOn }
             onMusicChange = { this.toggleMusicSwitch }
-            musicState = { this.playMusic }
+            musicState = { this.musicIsOn }
             onNightModeChange = { this.toggleNightModeSwitch }
             nightModeState = { this.isNightMode }
           />
@@ -292,7 +293,7 @@ export default class GameBoard extends Component {
         <ReactHowler
           src='./sounds/game-music.mp3'
           loop = { true }
-          playing = { this.playMusic }
+          playing = { this.musicIsOn }
         />
       </div>
     );
