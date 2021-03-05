@@ -2,7 +2,7 @@ import React from 'react';
 import './social-icons.scss';
 
 const githubLink = 'https://github.com/DenisKhatsuk';
-const youtubeLink = 'https://github.com/DenisKhatsuk';
+const youtubeLink = 'https://youtu.be/ngOLVOYv8JI';
 
 const SocialIcons = () => {
   return (
