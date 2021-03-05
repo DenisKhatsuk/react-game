@@ -1,0 +1,18 @@
+.winning-line {
+  position: absolute;
+  top: 80px;
+
+  &__line {
+    stroke: #555555;
+    animation: dash 3s linear forwards;
+    stroke-width: 3;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+  }
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

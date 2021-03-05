@@ -1,0 +1,12 @@
+$icon-color: #edeae5;
+
+.social-icons {
+  a {
+    padding-right: 15px;
+    color: $icon-color;
+  }
+
+  a:hover {
+    opacity: 0.9;
+  }
+}

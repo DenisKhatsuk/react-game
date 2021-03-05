@@ -1,0 +1,9 @@
+.buttons-block {
+  padding: 20px 30px;
+}
+
+@media (max-width: 700px) {
+  .buttons-block {
+    padding: 20px 20px;
+  }
+}

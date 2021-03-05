@@ -1,0 +1,27 @@
+$game-field-border-color: #026670;
+$game-field-color: #444444;
+
+.board-field {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  border: 2px solid $game-field-border-color;
+  background-color: transparent;
+  color: $game-field-color;
+  font-size: 4em;
+
+  &:hover {
+    cursor: default;
+
+    &:empty {
+      background-color: #dcd9d4;
+      cursor: pointer;
+    }
+  }
+}
+
+.board-row {
+  display: flex;
+}

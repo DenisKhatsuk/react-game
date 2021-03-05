@@ -1,0 +1,7 @@
+node_modules
+.stylelintrc.json
+public
+build
+*.*
+!*.css
+!*.scss

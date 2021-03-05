@@ -1,0 +1,17 @@
+@import "../abstract/constants";
+
+.app-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  transition: background-color 0.25s ease 0s, box-shadow 0.25s ease 0s;
+
+  &.night-mode {
+    background-color: $color-background-dark;
+
+    .react-game-app {
+      box-shadow: 10px 7px 8px -4px $color-shadow-dark;
+    }
+  }
+}

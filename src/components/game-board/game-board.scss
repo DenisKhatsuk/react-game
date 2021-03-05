@@ -1,0 +1,60 @@
+$game-settings-background-color: #9fedd7;
+
+.game-board {
+  display: flex;
+  width: 100%;
+
+  .game-field {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 70%;
+
+    .info-panel {
+      margin: 15px 0;
+    }
+  }
+
+  .game-settings {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30%;
+    padding: 20px 30px;
+    background-color: $game-settings-background-color;
+  }
+}
+
+.board-row {
+  display: flex;
+
+  .board-field:first-child {
+    border-left: none;
+  }
+
+  .board-field:last-child {
+    border-right: none;
+  }
+}
+
+.board-row:nth-child(3) {
+  .board-field {
+    border-top: none;
+  }
+}
+
+.board-row:nth-child(5) {
+  .board-field {
+    border-bottom: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .game-board {
+    .game-settings {
+      padding: 0;
+    }
+  }
+}

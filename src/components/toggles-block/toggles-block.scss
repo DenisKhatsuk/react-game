@@ -1,0 +1,9 @@
+.toggles-block {
+  padding: 20px 30px;
+
+  &__toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
