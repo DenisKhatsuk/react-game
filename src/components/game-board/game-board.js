@@ -6,6 +6,7 @@ import InfoPanel from '../info-panel';
 import ButtonsBlock from '../buttons-block';
 import TogglesBlock from '../toggles-block';
 import WinningLine from '../winning-line';
+import Statistics from '../statistics';
 
 export default class GameBoard extends Component {
   state = {
@@ -17,7 +18,10 @@ export default class GameBoard extends Component {
     isPlaying: true,
     winner: '',
     message: sessionStorage.getItem('message') || 'Let\'s play!',
+    statisticsIsVisible: (sessionStorage.getItem('statisticsIsVisible') === 'true'),
   };
+
+  statistics = JSON.parse(localStorage.getItem('statistics')) || [];
 
   currentPlayer = sessionStorage.getItem('startingPlayer') || 'X';
 
@@ -51,6 +55,7 @@ export default class GameBoard extends Component {
 
   saveSessionData = () => {
     sessionStorage.setItem('message', this.state.message);
+    sessionStorage.setItem('statisticsIsVisible', this.state.statisticsIsVisible);
     sessionStorage.setItem('startingPlayer', this.startingPlayer);
     sessionStorage.setItem('isNightMode', this.isNightMode);
     sessionStorage.setItem('soundIsOn', this.soundIsOn);
@@ -104,6 +109,18 @@ export default class GameBoard extends Component {
     }, 100);
   };
 
+  updateStatistics = () => {
+    const result = this.state.winner || 'Tie';
+    this.statistics.push(result);
+    if (this.statistics.length > 10) this.statistics.splice(0, 1);
+  };
+
+  toggleStatistics = () => {
+    this.setState({
+      statisticsIsVisible: !this.state.statisticsIsVisible,
+    });
+  };
+
   stopGame = (winner) => {
     const winMessage = `Player ${winner} won!`;
     const tieMessage = 'Tie!';
@@ -114,6 +131,8 @@ export default class GameBoard extends Component {
       this.setState({
         message: winner ? winMessage : tieMessage,
       });
+      this.updateStatistics();
+      localStorage.setItem('statistics', JSON.stringify(this.statistics));
     });
     this.drawLine(1);
     if (this.soundIsOn) this.toggleSound('playEndGameSound');
@@ -233,6 +252,7 @@ export default class GameBoard extends Component {
         this.autoplay();
         break;
       case 'Statistics':
+        this.toggleStatistics();
         break;
       case 'NewGame':
         this.setInitialGameState();
@@ -276,6 +296,11 @@ export default class GameBoard extends Component {
             visibility = { !this.state.isPlaying }
           />
           { gameBoard }
+          <Statistics
+            statistics = { this.statistics }
+            visibility = { this.state.statisticsIsVisible }
+            onClose = { this.toggleStatistics }
+          />
         </section>
         <section className = "game-settings">
           <TogglesBlock

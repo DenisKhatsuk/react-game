@@ -1,0 +1,41 @@
+$main-background-color: #edeae5;
+$statistics-color: #026670;
+
+.statistics {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: $main-background-color;
+  color: $statistics-color;
+
+  &_hidden {
+    display: none;
+  }
+
+  &__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 33px;
+    cursor: pointer;
+  }
+
+  &__title {
+    padding-bottom: 30px;
+  }
+
+  &__results {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 18px;
+  }
+
+  &__results-item {
+    padding-bottom: 10px;
+  }
+}
